@@ -9,10 +9,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                  
-                    sh 'git clone https://github.com/spring-projects/spring-petclinic.git .'
-                }
+                // Checks out your GitHub repo (from Jenkins job config)
+                checkout scm
             }
         }
 
@@ -70,9 +68,11 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    // Assuming kubectl is already configured inside Jenkins agent
                     sh 'kubectl apply -f deployment.yaml'
                 }
             }
         }
     }
 }
+
