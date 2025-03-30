@@ -3,22 +3,21 @@ pipeline {
 
     environment {
         SONARQUBE_SERVER = 'http://sonar:9000'
-        DOCKER_IMAGE = 'shanthanreddy80/java-app:latest'
+        DOCKER_IMAGE = 'shanthanreddy80/spring-petclinic:latest'
     }
 
     stages {
-       stage('Checkout') {
-    steps {
-        git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
-    }
-}
-
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
+            }
+        }
 
         stage('Build') {
             steps {
                 script {
                     docker.image('openjdk:17-jdk').inside {
-                        sh 'mvn clean package'
+                        sh './mvnw clean package'
                     }
                 }
             }
@@ -28,7 +27,7 @@ pipeline {
             steps {
                 script {
                     docker.image('openjdk:11-jdk').inside {
-                        sh 'mvn test'
+                        sh './mvnw test'
                     }
                 }
             }
@@ -38,7 +37,7 @@ pipeline {
             steps {
                 script {
                     docker.image('openjdk:8-jdk').inside {
-                        sh "mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER}"
+                        sh "./mvnw sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER}"
                     }
                 }
             }
@@ -70,3 +69,4 @@ pipeline {
         }
     }
 }
+
