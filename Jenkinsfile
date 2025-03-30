@@ -10,8 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    // Commented out to prevent permission errors inside Docker/WSL environments
-                    // deleteDir()
+                    // 🔧 Do NOT delete workspace directory to avoid permissions error in mounted volumes
+                    // deleteDir()  <-- This line is now fully removed
                     sh 'git clone https://github.com/spring-projects/spring-petclinic.git .'
                 }
             }
@@ -77,3 +77,4 @@ pipeline {
         }
     }
 }
+
