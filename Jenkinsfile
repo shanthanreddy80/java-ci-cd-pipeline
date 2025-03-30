@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'http://sonar:9000'
+        SONARQUBE_SERVER = 'http://sonarqube:9000'
         DOCKER_IMAGE = 'shanthanreddy80/spring-petclinic:latest'
     }
 
